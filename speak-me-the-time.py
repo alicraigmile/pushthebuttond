@@ -7,7 +7,7 @@ import time
 import os
 
 JOB = "date +'%d %B %I:%M%p' | festival --tts"
-LED_PIN = 8
+LED_PIN = 4
 BUTTON_PIN = 17
 
 try:
