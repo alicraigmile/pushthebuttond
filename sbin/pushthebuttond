@@ -11,7 +11,7 @@ import os
 #JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-xeyes.sh"
 #JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-dashboard.sh"
 
-JOB = "su pi -c /home/pi/workspace/pushthebutton/loop-dashboards"
+JOB = "su pi -c loop-dashboards"
 LED_PIN = 4
 BUTTON_PIN = 17
 
@@ -19,8 +19,10 @@ try:
   GPIO.setmode(GPIO.BCM)
   GPIO.setup(BUTTON_PIN,GPIO.IN)
   GPIO.setup(LED_PIN,GPIO.OUT)
+  print "Hello, I'm ready to run '"+JOB+"' when you need me to."
   print "LED on GPIO" + str(LED_PIN) + "..."
   print "Listening for switch on GPIO" + str(BUTTON_PIN )+ "..."
+
 
   #initialise a previous input variable to 0 (assume button not pressed last)
   prev_input = 0
