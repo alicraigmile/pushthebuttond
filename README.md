@@ -23,10 +23,6 @@ Connect one side of a button to 3.3v, and the other to ground (via a 10Kohm resi
 
 Connect the anode of an LED (+ve end) to GPIO4 and the other end to ground (via a 60ohm resistor).
 
-### Testing the hardware
-
-When you've installed everything (see below), run the script called [blink](bin/blink) to test the LED.
-
 ## Installing
 
 ```
@@ -65,15 +61,33 @@ That's about it!
 
 ## Changing the job which runs
 
-You'll need to edit the [sbin/pushthebuttond] script to change the job which runs. I've supplied a couple of options:
+You'll need to edit the [pushthebuttond](sbin/pushthebuttond) script to change the job which runs.
+
+I've supplied a few different options:
 
 * [loop-dashboards](bin/loop-dashboards) - launch chromium browser in kiosk mode. A push of the button loops through a series of web addresses specified in the script (default)
 * [speak-the-time]([bin/speak-the-time)-- um, it tells you the time.  
 * [launch-xeyes](bin/launch-xeyes) - each push of the button adds a new set of eyes to follow you around the room
 
-## Custom jobs## Custom jobs
+## Troubleshooting
 
-Write a shell script of your own, and as long as it's somewhere sensible (e.g. /usr/local/bin) then _pushthebuttond_ will be able to find it and run it.
+### Testing the hardware
+
+With the daemon stopped, run the script called [blink](bin/blink) to test the LED.
+
+### Check the logs
+
+_pushthebuttond_ has it's very own log file.
+
+```
+tail /var/log/pushthebuttond.log
+```
+
+## Custom jobs
+
+If you can write a shell script, and as long as it's somewhere sensible (e.g. /usr/local/bin) then _pushthebuttond_ will be able to find it and run it.
+
+Imagine the possibilities.
 
 _pushthebuttond_ could:
 
