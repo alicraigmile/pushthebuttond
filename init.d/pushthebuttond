@@ -1,0 +1,43 @@
+#!/bin/bash
+# /etc/init.d/pushthebuttond
+
+### BEGIN INIT INFO
+# Provides:		pushthebuttond
+# Required-Start:	$remote_fs $syslog
+# Required-Stop:	$remote_fs $syslog
+# Default-Start:	2 3 4 5
+# Refault-Stop:		0 1 6
+# Short-Description:	Push the button
+# Descripton:		This service is used to manage a button and an LED attached to the RPi GPIO pins
+### END INIT INFO
+
+SERVICE=pushthebuttond
+
+case "$1" in
+	start)
+		echo "Starting $SERVICE"
+		/usr/local/sbin/$SERVICE >>/var/log/pushthebuttond.log 2>&1 &
+		;;
+	stop)
+		echo "Stopping $SERVICE"
+		kill $(pgrep -f $SERVICE)
+		;;
+	status)
+		echo "."
+		pgrep -f $SERVICE
+		result=$?
+		if [ "${result}" -eq "0" ]; then
+			echo "`date` $SERVICE is running"
+		else
+			echo "`date` $SERVICE is not running"
+		fi
+		;;
+	*)
+		echo "Usage: /etc/init.d/$SERVICE start|stop|status"
+		exit 1
+		;;
+esac
+
+exit 0
+
+
