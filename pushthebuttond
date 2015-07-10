@@ -6,7 +6,12 @@ import RPi.GPIO as GPIO
 import time
 import os
 
-JOB = "date +'%d %B %I:%M%p' | festival --tts"
+#JOB = "date +'%d %B %I:%M%p' | festival --tts"
+#JOB = "echo 'James is a bit smelly' | festival --tts"
+#JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-xeyes.sh"
+#JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-dashboard.sh"
+
+JOB = "su pi -c /home/pi/workspace/pushthebutton/loop-dashboards"
 LED_PIN = 4
 BUTTON_PIN = 17
 

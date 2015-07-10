@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#set -x
+
+declare -a sitelist
+
+sitelist=(
+'http://localhost/'
+'http://www.bbc.co.uk/bitesize'
+'https://jira.dev.bbc.co.uk/secure/RapidBoard.jspa?rapidView=2892&view=detail'
+'https://jira.dev.bbc.co.uk/secure/RapidBoard.jspa?rapidView=2396&view=detail'
+'http://lumiere.cloud.bbc.co.uk/curriculum-deployment'
+'http://lumiere.cloud.bbc.co.uk/audience'
+)
+
+tempfile='/tmp/loop-dashboards.txt'
+
+count=0
+while [ "x${sitelist[count]}" != "x" ]
+do
+	count=$(( $count + 1 ))
+done
+
+if [ -f "$tempfile" ]
+then
+	latest=$(<$tempfile)
+else
+	latest=-1
+	#echo "$count" >  $tempfile
+fi
+
+#out-of-bounds - empty file
+if [ "x$latest" == "x" ]
+then
+	latest=-1
+fi
+
+#increment
+next=$(( $latest + 1 ))
+
+#out of bounds - top
+if [ $next -ge $count ]
+then
+	next=0
+fi
+
+echo "$next" > $tempfile
+
+export DISPLAY=:0
+
+chromium --kiosk "${sitelist[$next]}" &

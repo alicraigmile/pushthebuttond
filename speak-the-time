@@ -1,0 +1,3 @@
+#!/bin/bash
+
+date +'today is %d %B and the time is %_I:%M%p' | festival --tts
