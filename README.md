@@ -1,6 +1,17 @@
 # About pushthebuttond
 
-(c) 2015 British Broadcasting Corporation. #pushthebutton code and hardware by @alicraigmile.
+## My story
+
+There's a lot of information online which I need to get at regularly in my job. And so I use _pushbuttond_ running on a Raspberry Pi to quickly flip between information dashboards on a spare monitor at my desk.
+
+If I quickly need to see the BBC Bitesize Kanban board ... I push the button.
+
+If I then need to see the shaping board, or our audience stats, or our list of bugs (shh!) ... I push, push, push the button.
+
+I'd love to hear what you use _pushthebuttond_ for, so please get in touch with me. I'm [@alicraigmile](https://twitter.com/alicraigmile) on twitter too.
+
+Cheers,
+Ali
 
 ## Setting up the hardware
 
@@ -12,10 +23,15 @@ Connect one side of a button to 3.3v, and the other to ground (via a 10Kohm resi
 
 Connect the anode of an LED (+ve end) to GPIO4 and the other end to ground (via a 60ohm resistor).
 
+### Testing the hardware
+
+When you've installed everything (see below), run the script called [blink](bin/blink) to test the LED.
+
 ## Installing
 
 ```
-git clone...
+git clone https://github.com/alicraigmile/pushthebuttond.git
+cd pushthebuttond
 sudo ./install.sh 
 ```
 
@@ -47,15 +63,24 @@ When it completes, the LED will flash twice.
 
 That's about it! 
 
-## My story, what's yours?
+## Changing the job which runs
 
-I use pushbuttond to quickly flip between information dashboards at my desk.
+You'll need to edit the [sbin/pushthebuttond] script to change the job which runs. I've supplied a couple of options:
 
-If I quickly need to see the Bitesize Kanban board ... push the button.
+* [loop-dashboards](bin/loop-dashboards) - launch chromium browser in kiosk mode. A push of the button loops through a series of web addresses specified in the script (default)
+* [speak-the-time]([bin/speak-the-time)-- um, it tells you the time.  
+* [launch-xeyes](bin/launch-xeyes) - each push of the button adds a new set of eyes to follow you around the room
 
-Then look at the shaping board, the audience stats, the bug list ... push, push, push the button.
+## Custom jobs## Custom jobs
 
-I'd love to hear what you use pushthebuttond for, so get in touch with me here, or on twitter (@alicraigmile).
+Write a shell script of your own, and as long as it's somewhere sensible (e.g. /usr/local/bin) then _pushthebuttond_ will be able to find it and run it.
 
-Cheers,
-Ali
+_pushthebuttond_ could:
+
+* Play you some music
+* Tweet something
+* Save a bookmark for you
+* Take a photo from an attached webcam
+* Tell your CI environment to start a build or deploy your website
+
+What would you have it do? 
