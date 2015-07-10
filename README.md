@@ -8,7 +8,7 @@ If I quickly need to see the BBC Bitesize Kanban board ... I push the button.
 
 If I then need to see the shaping board, or our audience stats, or our list of bugs (shh!) ... I push, push, push the button.
 
-I'd love to hear what you use _pushthebuttond_ for, so please get in touch with me. I'm [@alicraigmile](https://twitter.com/alicraigmile) on twitter too.
+I'd love to hear what you use _pushthebuttond_ for, so please get in touch with me. I'm [@alicraigmile](https://twitter.com/alicraigmile) on twitter.
 
 Cheers,
 Ali
@@ -61,12 +61,12 @@ That's about it!
 
 ## Changing the job which runs
 
-You'll need to edit the [pushthebuttond](sbin/pushthebuttond) script to change the job which runs.
+You'll need to edit the [pushthebuttond](sbin/pushthebuttond#L14) script to change the job which runs.
 
 I've supplied a few different options:
 
 * [loop-dashboards](bin/loop-dashboards) - launch chromium browser in kiosk mode. A push of the button loops through a series of web addresses specified in the script (default)
-* [speak-the-time]([bin/speak-the-time)-- um, it tells you the time.  
+* [speak-the-time]([bin/speak-the-time) - um, it tells you the time.  
 * [launch-xeyes](bin/launch-xeyes) - each push of the button adds a new set of eyes to follow you around the room
 
 ## Troubleshooting
