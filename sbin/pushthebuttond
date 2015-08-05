@@ -5,53 +5,71 @@
 import RPi.GPIO as GPIO
 import time
 import os
+import ConfigParser
 
-#JOB = "date +'%d %B %I:%M%p' | festival --tts"
-#JOB = "echo 'James is a bit smelly' | festival --tts"
-#JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-xeyes.sh"
-#JOB = "su pi -c /home/pi/workspace/speak-me-the-time/launch-dashboard.sh"
+CONFIG_FILE = "pushthebuttond.cfg"
 
-JOB = "su pi -c loop-dashboards"
-LED_PIN = 4
-BUTTON_PIN = 17
+config = ConfigParser.ConfigParser()
+config.read(CONFIG_FILE)
+
+def gpio_setup():
+  led_pin    = config.read('gpio','led')
+  button_pin = config.read('gpio','button')
+  GPIO.setmode(GPIO.BCM)
+  GPIO.setup(led_pin,GPIO.OUT)
+  GPIO.setup(button_pin,GPIO.IN)
+  print "LED on GPIO" + str(led_pin) + "..."
+  print "Listening for button on GPIO" + str(button_pin)+ "..."
+
+def gpio_teardown():
+  print "Done with LED and button. Releasing GPIO ports..."
+  GPIO.cleanup()
+  print "ok"
+
+def flash_led(led_pin,times):
+  delay = 0.1
+  for _ in xrange(times):
+    switch_led_off(led_pin)
+    time.sleep(delay)
+    switch_led_on(led_pin)
+    time.sleep(delay)
+
+def switch_led_on(led_pin):
+      GPIO.output(led_pin,GPIO.HIGH)
+
+def switch_led_off(led_pin):
+      GPIO.output(led_pin,GPIO.LOW)
+
+gpio_setup()
+gpio_teardown()
 
 try:
-  GPIO.setmode(GPIO.BCM)
-  GPIO.setup(BUTTON_PIN,GPIO.IN)
-  GPIO.setup(LED_PIN,GPIO.OUT)
-  print "Hello, I'm ready to run '"+JOB+"' when you need me to."
-  print "LED on GPIO" + str(LED_PIN) + "..."
-  print "Listening for switch on GPIO" + str(BUTTON_PIN )+ "..."
-
-
+  led_pin    = config.read('gpio','led')
+  button_pin = config.read('gpio','button')
+  job        = config.read('actions','job')
+  print "Hello, I'm ready to run '"+job+"' when you need me to."
   #initialise a previous input variable to 0 (assume button not pressed last)
   prev_input = 0
   while True:
     #take a reading
-    input = GPIO.input(BUTTON_PIN)
+    input = GPIO.input(button_pin)
     #if the last reading was low and this one high, print
     if ((not prev_input) and input):
       print("Button pressed - i'll now run the job")
-      #turn on the led
-      GPIO.output(LED_PIN,GPIO.HIGH)
-      os.system(JOB)
-      #flash the led once the job completes and then turn it off
-      GPIO.output(LED_PIN,GPIO.LOW)
-      time.sleep(0.1)
-      GPIO.output(LED_PIN,GPIO.HIGH)
-      time.sleep(0.1)
-      GPIO.output(LED_PIN,GPIO.LOW)
-      time.sleep(0.1)
-      GPIO.output(LED_PIN,GPIO.HIGH)
-      time.sleep(0.1)
-      GPIO.output(LED_PIN,GPIO.LOW)
-      print "Job complete. Listening again on GPIO" + str(BUTTON_PIN) + "..."
+      switch_led_on(led_pin)
+      os.system(job)
+
+      #flash the led twice once the job completes and then turn it off
+      flash_led(led_pin,2)
+      switch_led_off(led_pin)
+      print "Job complete. Listening again on GPIO" + str(button_pin) + "..."
     #update previous input
     prev_input = input
     #slight pause to debounce
     time.sleep(0.05)
 except KeyboardInterrupt:
-  print "Bye :)"
+  print "SIGINT received. Exitting..."
 finally:
-  GPIO.cleanup()
+  gpio_teardown()
+  print "Bye :)"
 
