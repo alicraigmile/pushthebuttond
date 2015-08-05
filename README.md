@@ -49,6 +49,12 @@ sudo service pushthebuttond stop
 service pushthebuttond status
 ```
 
+## Starting the service on boot
+
+```
+sudo update-rc.d pushthebuttond defaults
+```
+
 ## Operating instructions
 
 When the service is running, pushing the button will cause the job (default: loop-dashboards) to run.
