@@ -31,25 +31,27 @@ cd pushthebuttond
 sudo ./install.sh 
 ```
 
-## Starting the daemon
+## Useful commands
+
+### Starting the service
 
 ```
 sudo service pushthebuttond start
 ```
 
-## Stopping the daemon
+### Stopping the service
 
 ```
 sudo service pushthebuttond stop
 ```
 
-## Checking if the service is running
+### Checking if the service is running
 
 ```
 service pushthebuttond status
 ```
 
-## Starting the service on boot
+### Starting the service on boot
 
 ```
 sudo update-rc.d pushthebuttond defaults
@@ -79,7 +81,7 @@ I've supplied a few different options:
 
 ### Testing the hardware
 
-With the daemon stopped, run the script called [blink](bin/blink) to test the LED.
+With the service stopped, run the script called [blink](bin/blink) to test the LED.
 
 ### Check the logs
 
