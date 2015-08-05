@@ -6,7 +6,7 @@
 # Required-Start:	$remote_fs $syslog
 # Required-Stop:	$remote_fs $syslog
 # Default-Start:	2 3 4 5
-# Refault-Stop:		0 1 6
+# Default-Stop:		0 1 6
 # Short-Description:	Push the button
 # Descripton:		This service is used to manage a button and an LED attached to the RPi GPIO pins
 ### END INIT INFO
